@@ -1,15 +1,15 @@
-import { ArticleResponse } from './interfaces.js';
+import { RickAndMortyResponse } from './interfaces.js';
 
 /**
  * Function to get data from a server
  * @param {string} url The URL to fetch data from.
- * @returns {Promise<ArticleResponse>} A promise that resolves to the API response
+ * @returns {Promise<RickAndMortyResponse>} A promise that resolves to the API response
  * containing the data or an error.
  */
-export const getData = async (url: string): Promise<ArticleResponse> => {
+export const getData = async (url: string): Promise<RickAndMortyResponse> => {
   try {
     const res: Response = await fetch(url);
-    const items: ArticleResponse = await res.json();
+    const items: RickAndMortyResponse = await res.json();
     return items;
   } catch (error) {
     return {
@@ -21,22 +21,22 @@ export const getData = async (url: string): Promise<ArticleResponse> => {
 /**
  * Function to get all data from different urls
  * @param {string} appUrlsData An array of URL paths to fetch data from.
- * @returns {Promise<ArticleResponse[]>} A promise that resolves to an array of
- * ArticleResponse objects from the provided URLs.
+ * @returns {Promise<RickAndMortyResponse[]>} A promise that resolves to an array of
+ * RickAndMortyResponse objects from the provided URLs.
  */
 export const getAllDataFromDifferentUrls = async (
   appUrlsData: string[]
-): Promise<ArticleResponse[]> => {
+): Promise<RickAndMortyResponse[]> => {
   // setup the promises
-  const promises: Promise<ArticleResponse>[] = appUrlsData.map((url: string) =>
-    getData(`http://localhost:3010${url}`)
+  const promises: Promise<RickAndMortyResponse>[] = appUrlsData.map((url: string) =>
+    getData(`https://rickandmortyapi.com/api${url}`)
   );
   // fetch all appointments
   try {
-    const items: ArticleResponse[] = await Promise.all(promises);
+    const items: RickAndMortyResponse[] = await Promise.all(promises);
     return items;
   } catch (error: unknown) {
-    console.log('🐮', error);
+    console.log('❌ API error:', error);
     return [{ error }];
   }
 };
@@ -44,17 +44,18 @@ export const getAllDataFromDifferentUrls = async (
 /**
  * Function to get data from a server
  * @param {string} url The URL to fetch data from.
- * @returns {Promise<ArticleResponse>} A promise that resolves to the API response
+ * @returns {Promise<RickAndMortyResponse>} A promise that resolves to the API response
  * containing the data or an error.
  */
-export const getDataFromAuthenticatedApi = async (url: string): Promise<ArticleResponse> => {
+export const getDataFromAuthenticatedApi = async (url: string): Promise<RickAndMortyResponse> => {
   try {
     const res: Response = await fetch(url, {
       headers: {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-      }});
-    const items: ArticleResponse = await res.json();
+      }
+    });
+    const items: RickAndMortyResponse = await res.json();
     return items;
   } catch (error) {
     return {

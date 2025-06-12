@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Error</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+</head>
+
+<body class="bg-rick bg-red-100 text-gray-900">
+    <h1 class="text-3xl font-bold">❌ Error</h1>
+    <p class="text-lg py-4">
+        <%= message %>
+    </p>
+
+    <% if (error && error.message) { %>
+        <pre class="bg-white text-red-700 p-4 rounded shadow"><%= error.message %></pre>
+        <% } %>
+
+            <a href="/" class="link">← Back to Home</a>
+</body>
+
+</html>

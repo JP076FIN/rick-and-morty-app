@@ -1,29 +1,45 @@
 /**
- * This file contains the interfaces used in the application.
- * It includes the ArticleResponse interface, which defines the structure of the
- * response from the API, and the Article interface, which defines the structure
- * of an article object.
+ * Rick and Morty API interface
  */
 
-interface Meta {
-  count?: number;
-  title: string;
+export interface Character {
+  id: number;
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: { name: string; url: string };
+  location: { name: string; url: string };
+  image: string;
+  episode: string[];
   url: string;
+  created: string;
 }
 
-export interface Article {
-  id?: number,
-  createdAt?: Date,
-  title: string,
-  author: string,
-  date: string,
-  categoryId: number,
-  image: string
-  intro: string
+export interface Location {
+  id: number;
+  name: string;
+  type: string;
+  dimension: string;
+  residents: string[];
+  url: string;
+  created: string;
 }
 
-export interface ArticleResponse{
-  meta?: Meta;
-  data?: Article[]
+export interface Episode {
+  id: number;
+  name: string;
+  air_date: string;
+  episode: string;
+  characters: string[];
+  url: string;
+  created: string;
+}
+
+// Generic response type
+export interface RickAndMortyResponse {
   error?: unknown;
+  data?: Character | Location | Episode | Character[] | Location[] | Episode[];
+
 }

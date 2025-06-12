@@ -1,1 +1,48 @@
 @import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom component styles */
+@layer components {
+    .character-grid {
+        @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center px-4 sm:px-8;
+    }
+
+    .character-card {
+        @apply bg-white p-6 rounded shadow-md text-center w-full max-w-xs;
+    }
+
+    .character-name {
+        @apply text-lg font-bold mb-2;
+    }
+
+    .character-image {
+        @apply mx-auto rounded mb-2 w-40 h-40 object-cover;
+    }
+
+    .character-subtext {
+        @apply text-gray-600;
+    }
+
+    .link {
+        @apply text-blue-600 hover:text-blue-800 transition-colors duration-300;
+    }
+
+    .info-box {
+        @apply bg-white/80 backdrop-blur-md p-6 rounded-xl shadow-xl;
+    }
+}
+
+/* Custom utility for background */
+@layer utilities {
+    .bg-rick {
+        background-image: url('/background.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        /* 🔒 Fixes background in place */
+    }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+
+<body class="bg-rick text-gray-900">
+    <header class="mb-6">
+        <!-- Main Navigation -->
+        <nav class="bg-white shadow p-4 mb-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-xl font-bold">Rick and Morty Characters</h1>
+                    <!-- Burger button always visible -->
+                    <button id="burger" class="text-blue-600 text-lg font-semibold">
+                        ☰ Menu
+                    </button>
+                </div>
+
+                <!-- Nav Links: Hidden by default, toggled by JS -->
+                <div id="nav-wrapper" class="hidden mt-4">
+                    <ul class="flex flex-col gap-2 md:flex-row md:gap-4 md:items-center">
+                        <li><a href="/" class="link">Home</a></li>
+                        <li><a href="/characters" class="link">Characters</a></li>
+                        <li><a href="/locations" class="link">Locations</a></li>
+                        <li><a href="/episodes" class="link">Episodes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+    <main>
+        <ul id="character-list" class="space-y-2">
+            <% characters.forEach(char=> { %>
+                <li class="border-b pb-1">
+                    <a href="/character/<%= char.id %>" class="link">
+                        <strong>ID:</strong>
+                        <%= char.id %> — <strong>Name:</strong>
+                            <%= char.name %>
+                    </a>
+                </li>
+
+                <% }) %>
+        </ul>
+        <button id="load-more" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Load
+            More</button>
+    </main>
+
+
+    <script>
+        let currentPage = 1;
+
+        document.getElementById('load-more')?.addEventListener('click', async () => {
+            currentPage++;
+            const res = await fetch(`/characters?page=${currentPage}`, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            const data = await res.json();
+            const list = document.getElementById('character-list');
+
+            data.characters.forEach(char => {
+                const li = document.createElement('li');
+                li.className = 'border-b pb-1';
+                li.innerHTML = `
+    <a href="/character/${char.id}" class="link">
+      <strong>ID:</strong> ${char.id} — <strong>Name:</strong> ${char.name}
+    </a>
+  `;
+                list.appendChild(li);
+            });
+
+
+            if (!data.hasNextPage) {
+                document.getElementById('load-more').disabled = true;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const burger = document.getElementById('burger');
+            const navWrapper = document.getElementById('nav-wrapper');
+
+            burger.addEventListener('click', () => {
+                navWrapper.classList.toggle('hidden');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

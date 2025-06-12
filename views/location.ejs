@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+
+<body class="bg-rick text-gray-900">
+    <header class="mb-6">
+        <!-- Main Navigation -->
+        <nav class="bg-white shadow p-4 mb-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-xl font-bold">Rick and Morty Characters</h1>
+                    <!-- Burger button always visible -->
+                    <button id="burger" class="text-blue-600 text-lg font-semibold">
+                        ☰ Menu
+                    </button>
+                </div>
+
+                <!-- Nav Links: Hidden by default, toggled by JS -->
+                <div id="nav-wrapper" class="hidden mt-4">
+                    <ul class="flex flex-col gap-2 md:flex-row md:gap-4 md:items-center">
+                        <li><a href="/" class="link">Home</a></li>
+                        <li><a href="/characters" class="link">Characters</a></li>
+                        <li><a href="/locations" class="link">Locations</a></li>
+                        <li><a href="/episodes" class="link">Episodes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <a href="/locations" class="text-blue-500 hover:underline mb-4 inline-block">← Back to Locations</a>
+
+    <h1 class="text-2xl font-bold mb-4">
+        <%= location.name %>
+    </h1>
+    <p><strong>Type:</strong>
+        <%= location.type %>
+    </p>
+    <p><strong>Dimension:</strong>
+        <%= location.dimension %>
+    </p>
+    <aside id="character-overview" class="info-box mt-6">
+        <p><strong>Residents:</strong></p>
+        <% if (residents && residents.length> 0) { %>
+            <ul class="list-disc pl-6">
+                <% residents.forEach(char=> { %>
+                    <li>
+                        <a href="/character/<%= char.id %>" class="link">
+                            <%= char.name %>
+                        </a>
+                    </li>
+                    <% }) %>
+            </ul>
+            <% } else { %>
+                <p>No known residents.</p>
+                <% } %>
+    </aside>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const burger = document.getElementById('burger');
+            const navWrapper = document.getElementById('nav-wrapper');
+
+            burger.addEventListener('click', () => {
+                navWrapper.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+
+</html>

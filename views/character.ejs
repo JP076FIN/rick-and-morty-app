@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+
+<body class="bg-rick text-gray-900">
+    <header class="mb-6">
+        <!-- Main Navigation -->
+        <nav class="bg-white shadow p-4 mb-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-xl font-bold">Rick and Morty Characters</h1>
+                    <!-- Burger button always visible -->
+                    <button id="burger" class="text-blue-600 text-lg font-semibold">
+                        ☰ Menu
+                    </button>
+                </div>
+
+                <!-- Nav Links: Hidden by default, toggled by JS -->
+                <div id="nav-wrapper" class="hidden mt-4">
+                    <ul class="flex flex-col gap-2 md:flex-row md:gap-4 md:items-center">
+                        <li><a href="/" class="link">Home</a></li>
+                        <li><a href="/characters" class="link">Characters</a></li>
+                        <li><a href="/locations" class="link">Locations</a></li>
+                        <li><a href="/episodes" class="link">Episodes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <a href="/characters" class="text-blue-500 hover:underline mb-4 inline-block">← Back to Characters</a>
+
+    <h1 class="text-2xl font-bold mb-4">
+        <%= character.name %>
+    </h1>
+    <img src="<%= character.image %>" alt="<%= character.name %>"
+        class="mt-4 mx-auto rounded shadow-md max-w-xs w-full">
+
+    <aside id="character-overview" class="info-box mt-6">
+
+
+        <p><strong>Status:</strong>
+            <%= character.status %>
+        </p>
+        <p><strong>Species:</strong>
+            <%= character.species %>
+        </p>
+        <p><strong>Gender:</strong>
+            <%= character.gender %>
+        </p>
+        <p><strong>Origin:</strong>
+            <% if (originId && character.origin.url) { %>
+                <a href="/location/<%= originId %>" class="link">
+                    <%= character.origin.name %>
+                </a>
+                <% } else { %>
+                    <%= character.origin.name %>
+                        <% } %>
+        </p>
+        <p><strong>Location:</strong>
+            <% if (locationId) { %>
+                <a href="/location/<%= locationId %>" class="link">
+                    <%= character.location.name %>
+                </a>
+                <% } else { %>
+                    <%= character.location.name %>
+                        <% } %>
+        </p>
+    </aside>
+    <aside id="character-overview" class="info-box mt-6">
+
+        <% if (episodes && episodes.length> 0) { %>
+            <h2 class="text-xl font-semibold mt-6 mb-2">Episodes:</h2>
+            <ul class="list-disc pl-6">
+                <% episodes.forEach(ep=> { %>
+                    <li>
+                        <a href="/episode/<%= ep.id %>" class="link hover:underline transition">
+                            <%= ep.name %> (<%= ep.episode %>)
+                        </a>
+                    </li>
+                    <% }) %>
+            </ul>
+            <%} %>
+    </aside>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const burger = document.getElementById('burger');
+            const navWrapper = document.getElementById('nav-wrapper');
+
+            burger.addEventListener('click', () => {
+                navWrapper.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+
+</html>
